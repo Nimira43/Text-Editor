@@ -35,7 +35,21 @@ class TextEditor:
     self.text_area = Text(frame, width=600, height=550,
                           yscrollcommand=scrollbar.set,
                           padx=10, pady=10, font=("Georgia", "14"))
-    
+    scrollbar.config(command=self.text_area.yview)
+    scrollbar.pack(side="right", fill="y")
+    self.text_area.pack(side="left", fill="both", expand=True)
+
+    file_menu = Menu(the_menu, tearoff=0)
+    file_menu.add_command(label="Open", command=self.open_file)
+    file_menu.add_command(label="SAve", command=self.save_file)
+    file_menu.add_separator()
+    file_menu.add_command(label="Quit", command=self.quit_app)
+    the_menu.add_cascade(label="File", menu=file_menu)
+    edit_menu = Menu(the_menu, tearoff=0)
+    edit_menu.add_command(label="Bold", command=self.make_bold())
+    the_menu.add_cascade(label="Edit", menu=edit_menu)
+    self.text_area.tag_config("bt", font=("Georgia", "14", "bold"))
+    root.config(menu=the_menu)
 
 root = Tk()
 the_menu = Menu(root)
